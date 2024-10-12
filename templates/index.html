@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Contact QR Code Generator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Urbanist:wght@500&display=swap");
+
+      * {
+        padding: 0px;
+        margin: 0px;
+        font-family: "Poppins", sans-serif;
+      }
+
+      body {
+        color: #fff;
+        background-color: #000;
+      }
+
+      .formContainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 10px;
+      }
+
+      .topBar {
+        display: inline-block;
+        background-color: #000;
+        text-align: center;
+        color: white;
+        width: 98.5%;
+        padding: 10px;
+      }
+
+      .inputBox {
+        width: 355px;
+        margin-left: 25px;
+        margin-top: 25px;
+        font-size: 15px;
+        padding: 1rem;
+        height: 20px;
+        outline: none;
+        background: none;
+        border: none;
+        color: white;
+        border-bottom: #3f83f6 solid 3px;
+        background-color: rgba(35, 35, 35, 0.639);
+      }
+
+      .infoText {
+        margin-left: 25px;
+        font-size: 14px;
+        font-weight: bold;
+        color: #ffffff;
+        margin-top: 10px;
+      }
+
+      .topText {
+        color: #fff;
+        font-size: 24px;
+      }
+
+      .btn {
+        padding: 15px 20px;
+        color: #3f83f6;
+        font-size: 17px;
+        background-color: #302f2f;
+        text-decoration: none;
+        transition: 0.5s;
+        letter-spacing: 2px;
+        border: none;
+        border-radius: 5px;
+        margin: 24px;
+        margin-left: 95px;
+        cursor: pointer;
+      }
+
+      .btn:hover {
+        background: #3f83f6;
+        color: #302f2f;
+        box-shadow: 0 0 5px #3f83f6, 0 0 25px #3f83f6, 0 0 50px #3f83f6,
+          0 0 100px #3f83f6;
+      }
+
+      #qr-code {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 20px;
+        width: 200px;
+        height: 200px;
+        border: 2px solid #3f83f6;
+        padding: 10px;
+      }
+
+      .download-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+      }
+
+      .download-btn button {
+        padding: 15px 20px;
+        color: #3f83f6;
+        font-size: 17px;
+        background-color: #302f2f;
+        text-decoration: none;
+        transition: 0.5s;
+        letter-spacing: 2px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .download-btn button:hover {
+        background: #3f83f6;
+        color: #302f2f;
+        box-shadow: 0 0 5px #3f83f6, 0 0 25px #3f83f6, 0 0 50px #3f83f6,
+          0 0 100px #3f83f6;
+      }
+
+      body footer {
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        margin: 15px;
+      }
+      #optionalText {
+        margin-top: 50px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <div class="topBar" data-aos="fade-right" data-aos-duration="1000">
+        <div>
+          <h1 class="topText">Contact QR Code Generator</h1>
+          <p>Generate a QR code for your contact details.</p>
+        </div>
+      </div>
+    </header>
+
+    <div class="formContainer">
+      <form action="/generate_qr" method="POST" enctype="multipart/form-data">
+        <input
+          name="first_name"
+          placeholder="First Name"
+          class="inputBox"
+          type="text"
+          required
+        /><br />
+        <input
+          name="last_name"
+          placeholder="Last Name"
+          class="inputBox"
+          type="text"
+          required
+        /><br />
+        <input
+          name="phone_number"
+          placeholder="Phone Number"
+          class="inputBox"
+          type="tel"
+          required
+        /><br />
+        <input
+          name="email"
+          placeholder="Email"
+          class="inputBox"
+          type="email"
+          required
+        /><br />
+        <input
+          name="job_title"
+          placeholder="Job Title"
+          class="inputBox"
+          type="text"
+        /><br />
+        <input
+          name="company_name"
+          placeholder="Company Name"
+          class="inputBox"
+          type="text"
+        /><br />
+        <input
+          name="address"
+          placeholder="Address"
+          class="inputBox"
+          type="text"
+        /><br />
+        <input
+          name="website"
+          placeholder="Website"
+          class="inputBox"
+          type="url"
+        /><br />
+        <p class="infoText" id="optionalText">
+          Optional: Upload a logo to embed in the QR code.
+        </p>
+        <input
+          name="logo"
+          type="file"
+          class="inputBox"
+          accept="image/*"
+        /><br />
+        <button type="submit" class="btn">Generate QR Code</button>
+      </form>
+    </div>
+
+    <div class="qr-display">
+      <!-- QR Code will be shown here -->
+      <img id="qr-code" src="#" alt="QR Code" style="display: none" />
+    </div>
+
+    <div class="download-btn" style="display: none">
+      <button id="download-btn">
+        <img
+          src="https://img.icons8.com/ios-filled/50/ffffff/download.png"
+          alt="Download"
+          width="20px"
+          style="margin-right: 10px"
+        />
+        Download QR Code
+      </button>
+    </div>
+
+    <footer>
+      <p class="footerText">
+        Generate a QR code for your contact details and download it to your
+        device.
+      </p>
+    </footer>
+
+    <script>
+      // Example function to show the QR Code once generated
+      function showQRCode(qrSrc) {
+        var qrImg = document.getElementById("qr-code");
+        qrImg.src = qrSrc;
+        qrImg.style.display = "block";
+
+        var downloadBtnDiv = document.querySelector(".download-btn");
+        downloadBtnDiv.style.display = "flex";
+      }
+    </script>
+  </body>
+</html>
